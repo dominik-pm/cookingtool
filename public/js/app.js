@@ -2,7 +2,7 @@ let socket;    // define a socket variable
 
 function setup() {
   // connect to server via sockets
-  socket = io.connect('http://localhost:3000');
+  socket = io.connect('http://www.cookingtool.tk/');
 
   // trigger 'updateMeals' when this client recieves a message called 'updateMeals'
   socket.on('updateMeals', updateMeals); // same message name as in server
