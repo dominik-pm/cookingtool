@@ -1,0 +1,86 @@
+.wrapperBestMeal {
+
+}
+
+.wrapperMealList {
+
+}
+h2 {
+    line-height: 1;
+}
+.mealContainer {
+    margin-bottom: 4px;
+    width: 100%;
+    padding: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+        "mealHeader mealMain mealMain"
+        "mealHeader mealFooter mealFooter";
+}
+.mealContainer:hover {
+    cursor: pointer;
+}
+.mealContainer p {
+    text-align: center;
+    margin: 0;
+}
+    .mealContainer .mealHeader {
+        min-width: 300px;
+        margin-right: 0;
+        grid-area: mealHeader;
+        display: flex;
+    }
+        .mealHeader img {
+            height: 64px;
+        }
+        .mealHeader h2 {
+            overflow: scroll;
+        }
+    .mealContainer .mealMain {
+        grid-area: mealMain;
+        justify-content: space-between;
+    }
+    .mealContainer .mealFooter {
+        grid-area: mealFooter;
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+        .mealFooter hr {
+            color: white;
+            width: 2px;
+        }
+
+/* 'TABLET' */
+@media only screen and (max-width: 1200px) {
+    .mealContainer {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+/* 'MOBILE' */
+@media only screen and (max-width: 700px) {
+    .mealContainer {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "mealHeader"
+            "mealMain "
+            "mealFooter";
+    }
+    .mealMain {
+        margin-top: 0.5rem;
+    }
+}
+
+/* 'MOBILE SMALLER' */
+@media only screen and (max-width: 550px) {
+
+}
+
+
+.hide {
+    display: none;
+}
