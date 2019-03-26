@@ -1,9 +1,9 @@
 [
   {
-    "name": "Schnitzel",
-    "description": "..some description..",
+    "name": "test",
+    "description": "lo",
     "date": "2019-03-26",
-    "ratings": [1],
+    "ratings": [],
     "rating": 0
   }
 ]
