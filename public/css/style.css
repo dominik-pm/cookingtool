@@ -19,7 +19,7 @@ h2 {
         "mealHeader mealMain mealMain"
         "mealHeader mealFooter mealFooter";
 }
-.mealContainer:hover {
+.mealHeader:hover {
     cursor: pointer;
 }
 .mealContainer p {
@@ -41,6 +41,9 @@ h2 {
     .mealContainer .mealMain {
         grid-area: mealMain;
         justify-content: space-between;
+    }
+    .mealContainer .mealMain .btn:hover {
+        cursor: pointer;
     }
     .mealContainer .mealFooter {
         grid-area: mealFooter;
