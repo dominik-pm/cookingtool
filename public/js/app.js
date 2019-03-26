@@ -48,7 +48,9 @@ $('#btn-saveChanges').click(function() {
     let newMeal = {
       name: inputMealName,
       description: inputMealDescription,
-      date: inputMealDate
+      date: inputMealDate,
+      ratings: [],
+      rating: 0
     }
 
     console.log(newMeal);
