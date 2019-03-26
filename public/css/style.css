@@ -36,7 +36,7 @@ h2 {
             height: 64px;
         }
         .mealHeader h2 {
-            overflow: scroll;
+            overflow: hidden;
         }
     .mealContainer .mealMain {
         grid-area: mealMain;

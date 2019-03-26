@@ -2,7 +2,8 @@ let socket;    // define a socket variable
 
 function setup() {
   // connect to server via sockets
-  socket = io.connect('http://www.cookingtool.tk/');
+//   socket = io.connect('http://www.cookingtool.tk'); 
+  socket = io.connect('localhost:80'); // local
 
   // trigger 'updateMeals' when this client recieves a message called 'updateMeals'
   socket.on('updateMeals', updateMeals); // same message name as in server
@@ -42,7 +43,6 @@ $('#btn-saveChanges').click(function() {
     let inputMealDate = $('#meal-date').val();
     $('#meal-date').val(dateToday());
     
-    // TODO: edit database and not the array
     console.log('Requesting to add a new Meal: Schnitzl');
 
     let newMeal = {
@@ -50,12 +50,19 @@ $('#btn-saveChanges').click(function() {
       description: inputMealDescription,
       date: inputMealDate
     }
-  
+
+    console.log(newMeal);
+    
     socket.emit('addMeal', newMeal);   // send "newMeal", messagename: "addMeal"
 });
 
 function displayMeals(container, meals) {
     $(container).children().remove();
+
+    let ratingStrings = [];
+    for (let i = 0; i < meals.length; i++) {
+        ratingStrings[i] = meals[i].ratings;
+    }
 
     for (let i = 0; i < meals.length; i++) {
         $(container).append(
@@ -70,8 +77,16 @@ function displayMeals(container, meals) {
                         '<p>'+meals[i].date+'</p>'+
                     '</div>'+
                     '<div>'+
+                        '<h4>Rate</h4>'+
+                        '<button class="btn btn-success btn-rate1" value='+i+'>1</button>'+
+                        '<button class="btn btn-warning btn-rate2" value='+i+'>2</button>'+
+                        '<button class="btn btn-info btn-rate3" value='+i+'>3</button>'+
+                        '<button class="btn btn-primary btn-rate4" value='+i+'>4</button>'+
+                        '<button class="btn btn-danger btn-rate5" value='+i+'>5</button>'+
+                    '</div>'+
+                    '<div>'+
                         '<h4>Rating</h4>'+
-                        '<p>4.3</p>'+
+                        '<p>'+ meals[i].rating +'</p>'+
                     '</div>'+
                 '</div>'+
                 '<div class="mealFooter">'+
@@ -81,11 +96,39 @@ function displayMeals(container, meals) {
                             '<li>'+meals[i].description+'</li>'+
                         '</ul>'+
                     '</div>'+
-                    '<p>Ratings: 3, 4, 5, 4, 3</p>'+
+                    '<p>Ratings: '+ ratingStrings[i] +'</p>'+
                 '</div>'+
             '</div>'
         );
     }
+    
+    // Rating
+    // TODO: maybe more dynamic
+    // get somehow the rating (1-5)
+    // 'mealIndex' = +$(this).val();    // + converts the value of the button to a number
+    // 'rateMeal': [index of the meal, rating]
+
+    $('.btn-rate1').click(function() {
+        let mealIndex = +$(this).val();
+        socket.emit('rateMeal', [mealIndex, 1]);
+    });
+    $('.btn-rate2').click(function() {
+        let mealIndex = +$(this).val();
+        socket.emit('rateMeal', [mealIndex, 2]);
+    });
+    $('.btn-rate3').click(function() {
+        let mealIndex = +$(this).val();
+        socket.emit('rateMeal', [mealIndex, 3]);
+    });
+    $('.btn-rate4').click(function() {
+        let mealIndex = +$(this).val();
+        socket.emit('rateMeal', [mealIndex, 4]);
+    });
+    $('.btn-rate5').click(function() {
+        let mealIndex = +$(this).val();
+        socket.emit('rateMeal', [mealIndex, 5]);
+    });
+
 
     // footer display
     let toggleFooter = false;
@@ -95,8 +138,8 @@ function displayMeals(container, meals) {
         $(footers[i]).hide();
     }
     
-    $('.mealContainer').click(function() {
-        let footer = $(this).find('.mealFooter');
+    $('.mealHeader').click(function() {
+        let footer = $(this).parent().find('.mealFooter');
         if (toggleFooter) {
             footer.fadeOut();
             toggleFooter = false;
@@ -108,4 +151,3 @@ function displayMeals(container, meals) {
     });
     //
 }
-

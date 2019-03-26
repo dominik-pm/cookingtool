@@ -1,32 +1,9 @@
 [
   {
-    "name": "as",
-    "description": "as",
-    "date": "2019-03-24"
-  },
-  {
-    "name": "Schnitzl",
-    "description": ".eggs.semibresl.flour",
-    "date": "2019-03-14"
-  },
-  {
-    "name": "asd",
-    "description": "asd",
-    "date": "2019-03-24"
-  },
-  {
-    "name": "asd",
-    "description": "asd",
-    "date": "2019-03-24"
-  },
-  {
-    "name": "asd",
-    "description": "asd",
-    "date": "2019-03-24"
-  },
-  {
-    "name": "adsa",
-    "description": "sdas",
-    "date": "2019-03-24"
+    "name": "Schnitzel",
+    "description": "..some description..",
+    "date": "2019-03-26",
+    "ratings": [1],
+    "rating": 0
   }
 ]
