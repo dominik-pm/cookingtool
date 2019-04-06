@@ -1,16 +1,19 @@
 // Setup the Server
   var express = require('express');
 
-  var app = express();
-  var server = app.listen(80);
-
+  var app = express(); // old
+  // var server = app.listen(13181); //13181
+  var server = app.listen(80);  // local
   app.use(express.static('public'));
-
   console.log("Socket server is runnning");
-// ----
 
-var socket = require('socket.io');
-var io = socket(server);
+  // let app = express();
+  // let server = require('http').createServer(app);
+  // let io = require('socket.io').listen(server);
+// ----
+  
+var socket = require('socket.io'); // old
+var io = socket(server); // old
 
 io.sockets.on('connection', newConnection);
 
@@ -268,3 +271,11 @@ function sortMealsByDate() {
     }
   });
 }
+
+
+
+
+
+server.listen('13181', () => {
+  console.log('Server listening on Port 13181');
+})

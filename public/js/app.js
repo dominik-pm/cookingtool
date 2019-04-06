@@ -1,20 +1,22 @@
 let socket;    // define a socket variable
 
 function setup() {
-  // connect to server via sockets
-//   socket = io.connect('http://www.cookingtool.tk'); 
-  socket = io.connect('localhost:80'); // local
+    // connect to server via sockets
+    // socket = io.connect('http://37.120.137.243:13181');
+    socket = io.connect('http://cookingtool.tk');
+    //socket = io.connect('192.168.1.133:80');
+    // socket = io.connect('localhost:80'); // local
 
-  // trigger 'updateMeals' when this client recieves a message called 'updateMeals'
-  socket.on('updateMeals', updateMeals); // same message name as in server
-  socket.on('setMealToday', setMealToday);
-  socket.on('alertAddMeal', alertAddMeal);
-  socket.on('alertGeneral', alertGeneral);
-  socket.on('unsetMealToday', unsetMealToday);
+    // trigger 'updateMeals' when this client recieves a message called 'updateMeals'
+    socket.on('updateMeals', updateMeals); // same message name as in server
+    socket.on('setMealToday', setMealToday);
+    socket.on('alertAddMeal', alertAddMeal);
+    socket.on('alertGeneral', alertGeneral);
+    socket.on('unsetMealToday', unsetMealToday);
 
-  console.log('connected to server! ');
+    console.log('connected to server! ');
 
-  noCanvas();
+    noCanvas();
 }
 
 let meals;
