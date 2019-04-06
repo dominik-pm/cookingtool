@@ -271,11 +271,3 @@ function sortMealsByDate() {
     }
   });
 }
-
-
-
-
-
-server.listen('13181', () => {
-  console.log('Server listening on Port 13181');
-})
