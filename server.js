@@ -1,11 +1,12 @@
 // Setup the Server
   var express = require('express');
 
-  var app = express(); // old
-  // var server = app.listen(13181); //13181
-  var server = app.listen(80);  // local
+  var port = 5000;
+
+  var app = express();
+  var server = app.listen(port);
   app.use(express.static('public'));
-  console.log("Socket server is runnning");
+  console.log("Socket server is runnning on port " + port);
 
   // let app = express();
   // let server = require('http').createServer(app);
