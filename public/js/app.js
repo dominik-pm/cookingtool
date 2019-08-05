@@ -3,7 +3,7 @@ let socket;    // define a socket variable
 function setup() {
     // connect to server via sockets
     // socket = io.connect('http://37.120.137.243:13181');
-    socket = io.connect('http://91.114.180.23:5000');
+    socket = io.connect('http://10.0.0.33:5000');
     // socket = io.connect('http://cookingtool.tk');
     // socket = io.connect('192.168.1.133:80');
     // socket = io.connect('localhost:80'); // local

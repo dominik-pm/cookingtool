@@ -7,5 +7,16 @@
   "dependencies": {
     "express": "^4.16.2",
     "socket.io": "^2.0.4"
-  }
+  },
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dominik-pm/cookingtool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dominik-pm/cookingtool/issues"
+  },
+  "homepage": "https://github.com/dominik-pm/cookingtool#readme"
 }
