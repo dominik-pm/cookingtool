@@ -3,14 +3,36 @@
     "name": "Schnitzel",
     "description": "desc...",
     "date": "2019-03-26",
-    "ratings": [1],
-    "rating": 0
+    "ratings": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      1
+    ],
+    "rating": 4.3
   },
   {
     "name": "Gulasch",
     "description": "",
     "date": "2019-03-28",
-    "ratings": [1, 1, 1],
+    "ratings": [
+      4,
+      4,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "rating": 1.9
+  },
+  {
+    "name": "Seimi",
+    "description": "",
+    "date": "2019-08-05",
+    "ratings": [],
     "rating": 0
   }
 ]
