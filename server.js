@@ -77,9 +77,11 @@ function newConnection(socket) {
       }
 
       // name should not be a duplicant
-      for (let i = 0; i < meals.length; i++) {
-        if (meals[i].name == newMeal.name) {
-          mealNameValid = false;
+      if (meals.length > 0) {
+        for (let i = 0; i < meals.length; i++) {
+          if (meals[i].name == newMeal.name) {
+            mealNameValid = false;
+          }
         }
       }
 
