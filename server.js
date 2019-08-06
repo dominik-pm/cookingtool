@@ -48,7 +48,7 @@ function newConnection(socket) {
   console.log('new connection: ' + socket.id);
 
   // check user validity
-  let member = 0 // 0 - read, 1 - rate, 2 - admin
+  let memberstatus = 0 // 0 - read, 1 - rate, 2 - admin
   //
   
   // trigger these functions if there are that messages frin the client
