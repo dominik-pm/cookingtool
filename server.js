@@ -271,7 +271,7 @@ function newConnection(socket) {
     }
   }
   function unsetMealToday() {
-    if (member >= 2) {
+    if (memberstatus >= 2) {
       if (mealTodaySet) {
         mealTodaySet = false;
         io.sockets.emit('unsetMealToday');
