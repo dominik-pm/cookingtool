@@ -1,6 +1,3 @@
-//req-setPassword to req-login
-//req-register
-
 // Setup the Server
   var express = require('express');
 
