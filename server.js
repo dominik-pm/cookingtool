@@ -48,7 +48,8 @@ function newConnection(socket) {
   console.log('new connection: ' + socket.id);
 
   // check user validity
-  let member = 0 // 0 - read, 1 - rate, 2 - admin
+  let memberstatus = 0 // 0 - read, 1 - rate, 2 - admin
+  let loggedinUserIndex = null;
   //
   
   // trigger these functions if there are that messages frin the client
@@ -127,33 +128,65 @@ function newConnection(socket) {
       socket.emit('alertModal', [true, msg])  // [dangerBool/*'true if its an error'*/, msg]
     }
   }
-  function rateMeal([index, rating]) {
+  function rateMeal([mealName, rating]) {
     let msg = '';
+
+    // find index
+    let index = 0;
+    for (let i = 0; i < meals.length; i++) {
+      if (meals[i].name == mealName) {
+        index = i;
+      }
+    }
   
     // check for rating validity 
     if (rating != null && rating >= 1 && rating <= 5) {
       // check for index validity 
       if (index < meals.length && index >= 0) {
         // check if rated meal is cooked today
-        if (index == mealTodayIndex) {
+        if (index == mealTodayIndex || true) {
           // check user validity 
           if (memberstatus >= 1) {
-            // add the new rating to the meal with the given index
-            meals[index].ratings.unshift(rating);
-            // max ratings: 10
-            if (meals[index].ratings.length > 10) {
-              meals[index].ratings.pop();
+            // check if the user has already rated this meal
+            let rated = false;
+            if (loggedinUserIndex != null) {
+              for (let i = 0; i < allUser[loggedinUserIndex].ratings.length; i++) {
+                if (allUser[loggedinUserIndex].ratings[i].meal == meals[index].name) {
+                  rated = true;
+                }
+              }
             }
-            
-            console.log(meals[index].name + ' just got rated a ' + rating + '!');
-            
-            globalUpdateMeals();
-            
-            msg += 'Rated \'' + meals[index].name + '\' a ' + rating + '!';
-            socket.emit('alertGeneral', [false, msg])
+            if (!rated) {
+
+              // add the new rating to the meal with the given index
+              meals[index].ratings.unshift(rating);
+              // max ratings: 10
+              if (meals[index].ratings.length > 10) {
+                meals[index].ratings.pop();
+              }
+              // log the rating to the user
+              allUser[loggedinUserIndex].ratings.push(
+                {
+                  meal: mealName,
+                  rated: rating
+                });
+              let data = JSON.stringify(allUser, null, 2);  // stringify the allUser array
+              fs.writeFile('user.json', data, function(e){});    // save the stringified JSON
+
+              console.log(meals[index].name + ' just got rated a ' + rating + '!');
+              
+              globalUpdateMeals();
+              
+              msg += 'Rated \'' + meals[index].name + '\' a ' + rating + '!';
+              socket.emit('alertGeneral', [false, msg])
+            }
+            else {
+              msg += 'You have already rated this meal!';
+              socket.emit('alertGeneral', [true, msg])
+            }
           }
           else {
-            msg += 'You are not a valid user!';
+            msg += 'You are not a member!';
             socket.emit('alertGeneral', [true, msg])
           }
         }
@@ -188,6 +221,8 @@ function newConnection(socket) {
     }
     else {
       // correctly logged in
+      loggedinUserIndex = allUser.indexOf(user);
+
       let msg = 'Logged in!';
       socket.emit('alertGeneral', [false, msg])  // [dangerBool/*'true if its an error'*/, msg]
       console.log(username + ' just logged in!');
@@ -271,7 +306,7 @@ function newConnection(socket) {
     }
   }
   function unsetMealToday() {
-    if (member >= 2) {
+    if (memberstatus >= 2) {
       if (mealTodaySet) {
         mealTodaySet = false;
         io.sockets.emit('unsetMealToday');
@@ -296,13 +331,13 @@ function globalUpdateMeals() {
   sortMealsByDate();
   updateRating();
   updateSuggested();
-  emitMealToday();
   io.sockets.emit('updateMeals', [meals, mealSuggestedIndex]);
+  emitMealToday();
 }
 
 function emitMealToday() {
   if (mealTodaySet) {
-    io.sockets.emit('setMealToday', meals[mealTodayIndex]);
+    io.sockets.emit('setMealToday', [meals[mealTodayIndex], mealTodayIndex]);
   }
 }
 
@@ -312,7 +347,7 @@ function updateSuggested() {
   mealSuggestedIndex = meals.length-1;
 
   for (let i = meals.length-1; i >= startIndex; i--) {
-    if (meals[i].rating < meals[mealSuggestedIndex].rating || meals[mealSuggestedIndex].rating == 0) {
+    if (meals[i].rating < meals[mealSuggestedIndex].rating) {
       mealSuggestedIndex = i;
     }
   }
@@ -340,9 +375,9 @@ function sortMealsByDate() {
     let date1 = a.date;
     let date2 = b.date;
     if (date1 < date2) {
-        return -1;
-    } else if (date1 > date2) {
         return 1;
+    } else if (date1 > date2) {
+        return -1;
     } else {
         return 0;
     }

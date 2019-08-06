@@ -26,20 +26,21 @@ function setup() {
 let meals;
 
 /* #region server called functions */
-function updateMeals([meals, mealSuggestedIndex]) {
-    meals = meals;
-    displayMeals('.wrapperMealList', meals);
+function updateMeals([m, mealSuggestedIndex]) {
+    meals = m;
+    setIneciesMeals()   // TODO: do better (some completely different system please)
+    displayMeals('.wrapperMealList', meals)
     displayMeals('.wrapperMealSuggested', [meals[mealSuggestedIndex]]);
     updateMealTodayPlaceholder(meals);
     console.log('updated all meals!');
 }
-function setMealToday(mealToday) {
+function setMealToday([mealToday]) {
     console.log('set meal to cook for today')
     $('.mealTodayPlaceholder').hide();              // hide default stuff when there is no meal for today
     displayMeals('.wrapperMealToday', [mealToday]); // add the meal to the container
     $('.wrapperMealToday').show();                  // show the meal today wrapper
     $('#btn-unsetMealToday').show();                // show the button to unselect today's meal
-    $('#btn-unsetMealToday').click(function () {     // eventlistener to that button
+    $('#btn-unsetMealToday').click(function () {    // eventlistener to that button
         socket.emit('req-unsetMealToday');
     });
 }
@@ -172,7 +173,7 @@ $('#btn-saveChanges').click(function () {
         rating: 0
     }
 
-    console.log(newMeal);
+    // console.log(newMeal);
 
     socket.emit('req-addMeal', newMeal);   // send "newMeal", messagename: "addMeal"
 });
@@ -224,6 +225,11 @@ function logoff() {
     $('header #not-loggedin').show();
     $('header #loggedin').hide();
 }
+function setIneciesMeals() {
+    for (let i = 0; i < meals.length; i++) {
+        meals[i].index = i;
+    }
+}
 function displayMeals(container, meals) {
     $(container).children().remove();
 
@@ -240,11 +246,11 @@ function displayMeals(container, meals) {
             rate =
                 '<div>' +
                 '<h4>Rate</h4>' +
-                '<button class="btn btn-success btn-rate1" value=' + i + '>1</button>' +
-                '<button class="btn btn-warning btn-rate2" value=' + i + '>2</button>' +
-                '<button class="btn btn-info btn-rate3" value=' + i + '>3</button>' +
-                '<button class="btn btn-primary btn-rate4" value=' + i + '>4</button>' +
-                '<button class="btn btn-danger btn-rate5" value=' + i + '>5</button>' +
+                '<button class="btn btn-success btn-rate1" value=' + meals[i].index + '>1</button>' +
+                '<button class="btn btn-warning btn-rate2" value=' + meals[i].index + '>2</button>' +
+                '<button class="btn btn-info btn-rate3" value=' + meals[i].index + '>3</button>' +
+                '<button class="btn btn-primary btn-rate4" value=' + meals[i].index + '>4</button>' +
+                '<button class="btn btn-danger btn-rate5" value=' + meals[i].index + '>5</button>' +
                 '</div>';
         }
 
@@ -283,27 +289,49 @@ function displayMeals(container, meals) {
     // get somehow the rating (1-5)
     // 'mealIndex' = +$(this).val();    // + converts the value of the button to a number
     // 'rateMeal': [index of the meal, rating]
+
     $('.btn-rate1').unbind().click(function () {
-        console.log('clicked on 1!');
-        let mealIndex = +$(this).val();
-        socket.emit('req-rateMeal', [mealIndex, 1]);
+        let mealName = $(this).closest('.mealContainer').find('h2')[0].textContent;
+        socket.emit('req-rateMeal', [mealName, 1]);
     });
     $('.btn-rate2').unbind().click(function () {
-        let mealIndex = +$(this).val();
-        socket.emit('req-rateMeal', [mealIndex, 2]);
+        let mealName = $(this).closest('.mealContainer').find('h2')[0].textContent;
+        socket.emit('req-rateMeal', [mealName, 2]);
     });
     $('.btn-rate3').unbind().click(function () {
-        let mealIndex = +$(this).val();
-        socket.emit('req-rateMeal', [mealIndex, 3]);
+        let mealName = $(this).closest('.mealContainer').find('h2')[0].textContent;
+        socket.emit('req-rateMeal', [mealName, 3]);
     });
     $('.btn-rate4').unbind().click(function () {
-        let mealIndex = +$(this).val();
-        socket.emit('req-rateMeal', [mealIndex, 4]);
+        let mealName = $(this).closest('.mealContainer').find('h2')[0].textContent;
+        socket.emit('req-rateMeal', [mealName, 4]);
     });
     $('.btn-rate5').unbind().click(function () {
-        let mealIndex = +$(this).val();
-        socket.emit('req-rateMeal', [mealIndex, 5]);
+        let mealName = $(this).closest('.mealContainer').find('h2')[0].textContent;
+        socket.emit('req-rateMeal', [mealName, 5]);
     });
+
+    // $('.btn-rate1').unbind().click(function () {
+    //     console.log('clicked on 1!');
+    //     let mealIndex = +$(this).val();
+    //     socket.emit('req-rateMeal', [mealIndex, 1]);
+    // });
+    // $('.btn-rate2').unbind().click(function () {
+    //     let mealIndex = +$(this).val();
+    //     socket.emit('req-rateMeal', [mealIndex, 2]);
+    // });
+    // $('.btn-rate3').unbind().click(function () {
+    //     let mealIndex = +$(this).val();
+    //     socket.emit('req-rateMeal', [mealIndex, 3]);
+    // });
+    // $('.btn-rate4').unbind().click(function () {
+    //     let mealIndex = +$(this).val();
+    //     socket.emit('req-rateMeal', [mealIndex, 4]);
+    // });
+    // $('.btn-rate5').unbind().click(function () {
+    //     let mealIndex = +$(this).val();
+    //     socket.emit('req-rateMeal', [mealIndex, 5]);
+    // });
 
 
     // hide all meal footers by default
