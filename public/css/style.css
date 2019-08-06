@@ -34,6 +34,21 @@
         align-items: center;
         flex-wrap: wrap;    
     }
+header div {
+    display: flex;
+}
+header * {
+    margin: 0 !important;
+}
+    header i {
+        font-size: 24px;
+    }
+    header i:hover {
+        cursor: pointer;
+    }
+    header div p {
+
+    }
 .mealContainer {
     margin-bottom: 8px;
     width: 100%;
@@ -55,6 +70,7 @@
     .mealContainer .mealHeader {
         min-width: 300px;
         margin-right: 0;
+        padding-right: 5px;
         grid-area: mealHeader;
         display: flex;
         align-items: center;
@@ -67,7 +83,7 @@
         }
     .mealContainer .mealMain {
         grid-area: mealMain;
-        justify-content: space-between;
+        justify-content: space-around;
     }
         .mealMain .btn {
             color: white;
@@ -95,7 +111,7 @@
 }
 
 /* 'MOBILE' */
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 720px) {
     .mealContainer {
         grid-template-columns: 1fr;
         grid-template-areas:
@@ -124,6 +140,9 @@
         font-size: .875rem;
         line-height:1.5;
         border-radius:.2rem;
+    }
+    body {
+        font-size: 12px !important;
     }
 }
 

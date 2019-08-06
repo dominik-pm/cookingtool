@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <head>
-        <title>Cooking Tool 1.0.4</title>
+        <title>Cooking Tool 1.0.5</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/style.css" rel="stylesheet">
@@ -10,6 +10,7 @@
         <script src="libraries/p5.js"></script>
         <script src="libraries/p5.dom.js"></script>
 
+        <script src="https://kit.fontawesome.com/2d3feeeef4.js"></script>
         <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -26,18 +27,93 @@
                 <strong>Success:</strong> 
                 <p></p>
             </div>
-            <div class="alert alert-info show" role="alert">
-                <div>
-                    <strong class="mr-2">Password:</strong>
-                    <input id="inputPassword" class="form-control mr-2" type="password">
-                    <button type="submit" class="btn btn-primary mr-2" id="btnPasswordSubmit">submit</button>
-                </div>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
         </div>
 
+        <!-- Login Modal -->
+        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="username-login" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="username-login">
+                        </div>
+                        <div class="form-group">
+                            <label for="password-login" class="col-form-label">Password:</label>
+                            <input type="password" class="form-control" id="password-login"></input>
+                        </div>
+                    </form>
+                    <div class="alert alert-success alert-success-modal" role="alert"></div>
+                    <div class="alert alert-danger alert-danger-modal" role="alert"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="login-submit-btn" type="button" class="btn btn-primary">Login</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Login Modal -->
+
+        <!-- Register Modal -->
+        <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="username-register" class="col-form-label">Username:</label>
+                            <input type="text" class="form-control" id="username-register"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="password-register" class="col-form-label">Password:</label>
+                            <input type="password" class="form-control" id="password-register"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="repassword-register" class="col-form-label">Retype Password:</label>
+                            <input type="password" class="form-control" id="repassword-register"></input>
+                        </div>
+                    </form>
+                    <div class="alert alert-success alert-success-modal" role="alert"></div>
+                    <div class="alert alert-danger alert-danger-modal" role="alert"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="register-submit-btn" type="button" class="btn btn-primary">Register</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Register Modal -->
+
+        <!-- Header -->
+        <header>
+            <div id="not-loggedin">
+                <button data-toggle="modal" data-target="#login-modal" type="submit" class="btn btn-primary mr-2" id="login-btn">Login</button>
+                <button data-toggle="modal" data-target="#register-modal" type="submit" class="btn btn-info mr-2" id="register-btn">Register</button>
+            </div>
+            <div id="loggedin">
+                <i id="logoff-btn" class="fas fa-user mr-4" data-toggle="tooltip" title="Logoff"></i>
+                <p class="text-light mr-1">Username: </p>
+                <p class="text-warning mr-4" id="username-p">undefined</p>
+                <p class="text-light mr-1">Member status: </p>
+                <p id="memberstatus-p">undefined</p>
+            </div>
+        </header>
+        <!-- Header -->
 
         <!-- Meal Today -->
         <div class="d-flex justify-content-between mb-2">
