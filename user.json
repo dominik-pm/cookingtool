@@ -3,6 +3,11 @@
     "username": "Dominik",
     "password": "25664",
     "memberstatus": 2,
-    "ratings": []
+    "ratings": [
+      {
+        "meal": "Gulasch",
+        "rated": 1
+      }
+    ]
   }
 ]
