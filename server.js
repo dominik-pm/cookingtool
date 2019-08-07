@@ -1,8 +1,8 @@
 // Setup the Server
   var express = require('express');
 
-  var port = 5000;
-  // var port = 5500;
+  // var port = 5000;
+  var port = 5500;
 
   var app = express();
   var server = app.listen(port);
@@ -13,7 +13,7 @@
   // let server = require('http').createServer(app);
   // let io = require('socket.io').listen(server);
 // ----
-  
+
 var socket = require('socket.io'); // old
 var io = socket(server); // old
 
@@ -74,54 +74,61 @@ function newConnection(socket) {
 
   // client called functions
   function addMeal(newMeal) {
-    // check validity of new meal
-    if (memberstatus >= 2) {
+    if (loggedinUserIndex != null) {
 
-      let mealNameValid = true;
-
-      // name should have at least 3 letters
-      if (newMeal.name.length < 3) {
-        mealNameValid = false;
-      }
-
-      // name should not be a duplicant
-      if (meals.length > 0) {
-        for (let i = 0; i < meals.length; i++) {
-          if (meals[i].name == newMeal.name) {
-            mealNameValid = false;
+      // check validity of new meal
+      if (memberstatus >= 2) {
+        
+        let mealNameValid = true;
+        
+        // name should have at least 3 letters
+        if (newMeal.name.length < 3) {
+          mealNameValid = false;
+        }
+        
+        // name should not be a duplicant
+        if (meals.length > 0) {
+          for (let i = 0; i < meals.length; i++) {
+            if (meals[i].name == newMeal.name) {
+              mealNameValid = false;
+            }
           }
         }
-      }
-
-      if (mealNameValid) {
-        // if 'newMeal' is valid
-        //  -> write to json and send update all meals
         
-        // --- writing to the meals.json file ---
+        if (mealNameValid) {
+          // if 'newMeal' is valid
+          //  -> write to json and send update all meals
+          
+          // --- writing to the meals.json file ---
           meals.push(newMeal);                          // add the new meal to the array from the json file
           let data = JSON.stringify(meals, null, 2);    // stringify the new meals array
           fs.writeFile('meals.json', data, finished);   // save the stringified JSON
           function finished(error) {
             console.log(newMeal.name + ' added to database!');
           }
-        // --- ---
-
-        globalUpdateMeals();
-
-        let msg = 'Added ' + newMeal.name + ' to database!';
-        socket.emit('alertModal', [false, msg])  // [dangerBool/*'true if its an error'*/, msg]
+          // --- ---
+          
+          globalUpdateMeals();
+          
+          let msg = 'Added ' + newMeal.name + ' to database!';
+          socket.emit('alertModal', [false, msg])  // [dangerBool/*'true if its an error'*/, msg]
+        }
+        else {
+          // if invalid meal name:
+          //  -> send error message to this client
+          let msg = 'Couldn\'t add this meal to database. Invalid meal name!';
+          socket.emit('alertModal', [true, msg])  // [dangerBool/*'true if its an error'*/, msg]
+        }
       }
       else {
-        // if invalid meal name:
+        // if no admin permissions:
         //  -> send error message to this client
-        let msg = 'Couldn\'t add this meal to database. Invalid meal name!';
+        let msg = 'Couldn\'t add this meal to database. You are not an admin!';
         socket.emit('alertModal', [true, msg])  // [dangerBool/*'true if its an error'*/, msg]
       }
     }
     else {
-      // if no admin permissions:
-      //  -> send error message to this client
-      let msg = 'Couldn\'t add this meal to database. You are not a valid admin!';
+      let msg = 'You are not logged in!';
       socket.emit('alertModal', [true, msg])  // [dangerBool/*'true if its an error'*/, msg]
     }
   }
@@ -142,49 +149,56 @@ function newConnection(socket) {
       if (index < meals.length && index >= 0) {
         // check if rated meal is cooked today
         if (index == mealTodayIndex || true) {
-          // check user validity 
-          if (memberstatus >= 1) {
-            // check if the user has already rated this meal
-            let rated = false;
-            if (loggedinUserIndex != null) {
-              for (let i = 0; i < allUser[loggedinUserIndex].ratings.length; i++) {
-                if (allUser[loggedinUserIndex].ratings[i].meal == meals[index].name) {
-                  rated = true;
+          // check if the user is logged in
+          if (loggedinUserIndex != null) {
+            // check if the user is a member or an admin
+            if (memberstatus >= 1) {
+              // check if the user has already rated this meal
+              let rated = false;
+              if (loggedinUserIndex != null) {
+                for (let i = 0; i < allUser[loggedinUserIndex].ratings.length; i++) {
+                  if (allUser[loggedinUserIndex].ratings[i].meal == meals[index].name) {
+                    rated = true;
+                  }
                 }
               }
-            }
-            if (!rated) {
+              if (!rated) {
 
-              // add the new rating to the meal with the given index
-              meals[index].ratings.unshift(rating);
-              // max ratings: 10
-              if (meals[index].ratings.length > 10) {
-                meals[index].ratings.pop();
+                // add the new rating to the meal with the given index
+                meals[index].ratings.unshift(rating);
+                // max ratings: 10
+                if (meals[index].ratings.length > 10) {
+                  meals[index].ratings.pop();
+                }
+                // log the rating to the user
+                allUser[loggedinUserIndex].ratings.push(
+                  {
+                    meal: mealName,
+                    rated: rating
+                  });
+                let data = JSON.stringify(allUser, null, 2);  // stringify the allUser array
+                fs.writeFile('user.json', data, function(e){});    // save the stringified JSON
+
+                console.log(meals[index].name + ' just got rated a ' + rating + '!');
+                
+                globalUpdateMeals();
+                
+                msg += 'Rated \'' + meals[index].name + '\' a ' + rating + '!';
+                socket.emit('alertGeneral', [false, msg])
               }
-              // log the rating to the user
-              allUser[loggedinUserIndex].ratings.push(
-                {
-                  meal: mealName,
-                  rated: rating
-                });
-              let data = JSON.stringify(allUser, null, 2);  // stringify the allUser array
-              fs.writeFile('user.json', data, function(e){});    // save the stringified JSON
-
-              console.log(meals[index].name + ' just got rated a ' + rating + '!');
-              
-              globalUpdateMeals();
-              
-              msg += 'Rated \'' + meals[index].name + '\' a ' + rating + '!';
-              socket.emit('alertGeneral', [false, msg])
+              else {
+                msg += 'You have already rated this meal!';
+                socket.emit('alertGeneral', [true, msg])
+              }
             }
             else {
-              msg += 'You have already rated this meal!';
+              msg += 'You are not a member!';
               socket.emit('alertGeneral', [true, msg])
             }
           }
           else {
-            msg += 'You are not a member!';
-            socket.emit('alertGeneral', [true, msg])
+            let msg = 'You are not logged in!';
+            socket.emit('alertGeneral', [true, msg]);
           }
         }
         else {
@@ -274,46 +288,59 @@ function newConnection(socket) {
   } 
   function logoff() {
     memberstatus = 0;
+    loggedinUserIndex = null;
   }
   function setMealToday(index) {
-    if (memberstatus >= 2) {
-      if (!mealTodaySet) {
-        if (index < meals.length) {
-          mealTodayIndex = index;
-          mealTodaySet = true;
-          emitMealToday();
-          console.log('set meal today:');
-          console.log(meals[mealTodayIndex]);
-          let msg = 'Successfully set today\'s meal!'
-          socket.emit('alertGeneral', [false, msg]);
+    if (loggedinUserIndex != null) {
+      if (memberstatus >= 2) {
+        if (!mealTodaySet) {
+          if (index < meals.length) {
+            mealTodayIndex = index;
+            mealTodaySet = true;
+            emitMealToday();
+            console.log('set meal today:');
+            console.log(meals[mealTodayIndex]);
+            let msg = 'Successfully set today\'s meal!'
+            socket.emit('alertGeneral', [false, msg]);
+          }
+          else {
+            let msg = 'Index too high (you are as well probably :) )!';
+            socket.emit('alertGeneral', [true, msg]);
+          }
         }
         else {
-          let msg = 'Index too high (you are as well probably :) )!';
+          let msg = 'Meal already set to be cooked today!';
           socket.emit('alertGeneral', [true, msg]);
         }
       }
       else {
-        let msg = 'Meal already set to be cooked today!';
+        let msg = 'You are not an admin!';
         socket.emit('alertGeneral', [true, msg]);
       }
     }
     else {
-      let msg = 'You are not an admin!';
+      let msg = 'You are not logged in!';
       socket.emit('alertGeneral', [true, msg]);
     }
   }
   function unsetMealToday() {
-    if (memberstatus >= 2) {
-      if (mealTodaySet) {
-        mealTodaySet = false;
-        io.sockets.emit('unsetMealToday');
-        console.log('unset meal today');
-        let msg = 'Successfully unset today\'s meal!'
-        socket.emit('alertGeneral', [false, msg]);
+    if (loggedinUserIndex != null) {
+      if (memberstatus >= 2) {
+        if (mealTodaySet) {
+          mealTodaySet = false;
+          io.sockets.emit('unsetMealToday');
+          console.log('unset meal today');
+          let msg = 'Successfully unset today\'s meal!'
+          socket.emit('alertGeneral', [false, msg]);
+        }
+      }
+      else {
+        let msg = 'You are not an admin!';
+        socket.emit('alertGeneral', [true, msg]);
       }
     }
     else {
-      let msg = 'You are not an admin!';
+      let msg = 'You are not logged in!';
       socket.emit('alertGeneral', [true, msg]);
     }
   }
