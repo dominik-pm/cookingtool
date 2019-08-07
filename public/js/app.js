@@ -6,8 +6,8 @@ function setup() {
     // socket = io.connect('http://cookingtool.tk');
     // socket = io.connect('192.168.1.133:80');
     
-    // socket = io.connect('http://10.0.0.33:5000');
-    socket = io.connect('localhost:5500'); // local
+    socket = io.connect('http://10.0.0.33:5000');
+    //socket = io.connect('localhost:5500'); // local
 
     // trigger 'updateMeals' when this client recieves a message called 'updateMeals'
     socket.on('updateMeals', updateMeals); // same message name as in server
