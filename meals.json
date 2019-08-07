@@ -1,31 +1,13 @@
 [
   {
-    "name": "Gulasch",
-    "description": "",
-    "date": "2019-08-05",
-    "ratings": [
-      1
-    ],
-    "rating": 1
-  },
-  {
     "name": "Zucchini Cordonbleu",
     "description": "",
     "date": "2019-05-08",
-    "ratings": [
-      4,
-      2,
-      2,
-      3,
-      2,
-      2,
-      2,
-      1
-    ],
-    "rating": 2.3
+    "ratings": [],
+    "rating": 0
   },
   {
-    "name": "asd",
+    "name": "Blaubeeren-Topfen Strudel",
     "description": "",
     "date": "2019-08-06",
     "ratings": [],
