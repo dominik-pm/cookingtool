@@ -1,12 +1,5 @@
 [
   {
-    "name": "Zucchini Cordonbleu",
-    "description": "",
-    "date": "2019-05-08",
-    "ratings": [],
-    "rating": 0
-  },
-  {
     "name": "Blaubeeren-Topfen Strudel",
     "description": "",
     "date": "2019-08-06",
@@ -14,9 +7,16 @@
     "rating": 0
   },
   {
-    "name": "Blaubeeren-Topfen Strudel2",
+    "name": "Zucchini Cordonbleu",
     "description": "",
-    "date": "2019-08-06",
+    "date": "2019-05-08",
+    "ratings": [],
+    "rating": 0
+  },
+  {
+    "name": "Fischpfanne",
+    "description": "",
+    "date": "2019-08-09",
     "ratings": [],
     "rating": 0
   }
