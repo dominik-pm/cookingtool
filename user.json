@@ -10,5 +10,11 @@
     "password": "a",
     "memberstatus": 2,
     "ratings": []
+  },
+  {
+    "username": "b",
+    "password": "b",
+    "memberstatus": 1,
+    "ratings": []
   }
 ]
