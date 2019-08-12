@@ -8,6 +8,12 @@ h1 {
     /* Headlines */
     font-size: 2em !important;
 }
+h4 {
+    font-size: 1.25em !important;
+}
+input {
+    font-size: 0.75em !important;
+}
 .wrapperMealToday {
 
 }
@@ -47,6 +53,10 @@ h1 {
         align-items: center;
         flex-wrap: wrap;    
     }
+.close {
+    /* close button modal */
+    font-size: 1.5em !important;
+}
 
 header {
     margin-bottom: 8px;
@@ -104,9 +114,6 @@ header #logged-out {
     font-size: 1.5em;
     line-height: 1.5em;
     margin-bottom: 0 !important;
-}
-.mealContainer h4 {
-    font-size: 1.25em;
 }
     .mealContainer .mealHeader {
         min-width: 300px;
