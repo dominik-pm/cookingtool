@@ -100,8 +100,8 @@ function loggedIn([username, memberstatus]) {
     $('#password-login').val('');
     $('.modal').modal('hide');
 
-    $('header #not-loggedin').hide();
-    $('header #loggedin').show();
+    $('header #logged-out').hide();
+    $('header #logged-in').show();
 
     $('#username-p').text(username);
     // memberstatus is 0 - not a member, 1 - member, 2 - admin
@@ -136,8 +136,8 @@ window.onload = function () {
     $('.alert').hide();
     $('#btn-unsetMealToday').hide();
 
-    $('header #not-loggedin').show();
-    $('header #loggedin').hide();
+    $('header #logged-out').show();
+    $('header #logged-in').hide();
 };
 
 $('#login-btn').click(function() {
@@ -147,6 +147,9 @@ $('#register-btn').click(function() {
     register();
 });
 $('#logoff-btn').click(function() {
+    $('#logoff-modal').modal('show');
+});
+$('#logoff-confirm-btn').click(function() {
     logoff();
 });
 
@@ -223,8 +226,8 @@ function register() {
 }
 function logoff() {
     socket.emit('req-logoff');
-    $('header #not-loggedin').show();
-    $('header #loggedin').hide();
+    $('header #logged-out').show();
+    $('header #logged-in').hide();
 }
 function setIneciesMeals() {
     for (let i = 0; i < meals.length; i++) {
