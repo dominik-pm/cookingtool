@@ -6,8 +6,8 @@ function setup() {
     // socket = io.connect('http://cookingtool.tk');
     // socket = io.connect('192.168.1.133:80');
     
-    socket = io.connect('http://10.0.0.33:5000');
-    //socket = io.connect('localhost:5500'); // local
+    // socket = io.connect('http://10.0.0.33:5000');
+    socket = io.connect('localhost:5500'); // local
 
     // trigger 'updateMeals' when this client recieves a message called 'updateMeals'
     socket.on('updateMeals', updateMeals); // same message name as in server
@@ -154,10 +154,11 @@ $('#logoff-confirm-btn').click(function() {
 });
 
 // for tooltips
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
-});
-
+function activatetooltips() {
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+}
 $('#btn-saveChanges').click(function () {
     let inputMealName = $('#meal-name').val();
     $('#meal-name').val('');
@@ -261,7 +262,7 @@ function displayMeals(container, meals) {
         $(container).append(
             '<div class="mealContainer rounded-lg bg-dark text-white">' +
             '<div class="mealHeader">' +
-            '<img src="assets/mealIcon.png" class="mr-2 card-img-left rounded-lg" alt="schnitzel">' +
+            '<img src="assets/mealIcon.png" class="mr-2 card-img-left rounded-lg" alt="Meal">' +
             '<h2>' + meals[i].name + '</h2>' +
             '</div>' +
             '<div class="mealMain d-flex">' +
@@ -277,7 +278,7 @@ function displayMeals(container, meals) {
             '</div>' +
             '<div class="mealFooter">' +
             '<div>' +
-            '<h5>Description</h5>' +
+            '<p>Description</p>' +
             '<ul>' +
             '<li>' + meals[i].description + '</li>' +
             '</ul>' +
@@ -357,6 +358,7 @@ function displayMeals(container, meals) {
             footerVisible = true;
         }
     });
+    activatetooltips();
 }
 function getDateToday() {
     let today = new Date().toJSON().slice(0, 10).replace(/-/g, '-');

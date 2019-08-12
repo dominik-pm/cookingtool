@@ -1,11 +1,21 @@
 body {
     user-select: none;
 }
+button {
+    font-size: 1em !important;
+}
+h1 {
+    /* Headlines */
+    font-size: 2em !important;
+}
 .wrapperMealToday {
 
 }
     .mealTodayPlaceholder {
         padding: 0.5rem;
+    }
+    .dropdown-menu a {
+        font-size: 1.5em;
     }
 .wrapperMealSuggested {
 
@@ -49,14 +59,14 @@ header * {
     margin: 0 !important;
 }
     header i {
-        font-size: 24px;
+        font-size: 1.5em;
     }
     header i:hover {
         cursor: pointer;
     }
     header div p {
-        height: 16px;
-        font-size:  16px !important;
+        height: 1em;
+        font-size: 1em;
     }
 header #logged-in {
     width: 100%;
@@ -68,6 +78,8 @@ header #logged-in {
         display: flex;
     }
 header #logged-out {
+    display: flex;
+    width: 100%;
 }
 .mealContainer {
     margin-bottom: 8px;
@@ -86,6 +98,15 @@ header #logged-out {
 .mealContainer p {
     text-align: center;
     margin: 0;
+    font-size: 1em;
+}
+.mealContainer h2 {
+    font-size: 1.5em;
+    line-height: 1.5em;
+    margin-bottom: 0 !important;
+}
+.mealContainer h4 {
+    font-size: 1.25em;
 }
     .mealContainer .mealHeader {
         min-width: 300px;
@@ -118,20 +139,22 @@ header #logged-out {
         justify-content: space-around;
         align-items: flex-end;
     }
-        .mealFooter hr {
-            color: white;
-            width: 2px;
+    .mealFooter hr {
+        color: white;
+        width: 2px;
+    }
+    .mealFooter div {
+        display: inline-block;
+    }
+        .mealFooter div li {
+            font-size: 0.5em;
         }
 
 /* 'TABLET' */
 @media only screen and (max-width: 1200px) {
-    .mealContainer {
-        grid-template-columns: 1fr 1fr 1fr;
+    body {
+        font-size: 24px !important;
     }
-}
-
-/* 'MOBILE' */
-@media only screen and (max-width: 720px) {
     .mealContainer {
         grid-template-columns: 1fr;
         grid-template-areas:
@@ -139,30 +162,38 @@ header #logged-out {
             "mealMain "
             "mealFooter";
     }
-    .mealMain {
-        margin-top: 0.5rem;
+        .mealMain {
+            margin-top: 0.5rem;
+        }
+    #logged-out {
+        justify-content: space-between;
     }
+        #logged-out button, #logged-in button {
+            padding: 14px 24px;
+        }
+}
 
+/* 'MOBILE' */
+@media only screen and (max-width: 720px) {
+    body {
+        font-size: 28px !important;
+    }
     .alert-info .btn {
         font-size: 14px;
         padding: 4px 8px;
-    }
-    .alert-info #inputPassword {
-        padding: 4px 8px;
-        height: 31px;
     }
 }
 
 /* 'MOBILE SMALL' */
 @media only screen and (max-width: 450px) {
+    body {
+        font-size: 14px !important;
+    }
     .mealContainer .btn {
         padding:.25rem.5rem;
         font-size: .875rem;
         line-height:1.5;
         border-radius:.2rem;
-    }
-    body {
-        font-size: 14px !important;
     }
 }
 
