@@ -16,11 +16,5 @@
     "password": "b",
     "memberstatus": 1,
     "ratings": []
-  },
-  {
-    "username": "c",
-    "password": "c",
-    "memberstatus": 0,
-    "ratings": []
   }
 ]
