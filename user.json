@@ -4,5 +4,17 @@
     "password": "25664",
     "memberstatus": 2,
     "ratings": []
+  },
+  {
+    "username": "a",
+    "password": "a",
+    "memberstatus": 2,
+    "ratings": []
+  },
+  {
+    "username": "b",
+    "password": "b",
+    "memberstatus": 1,
+    "ratings": []
   }
 ]
