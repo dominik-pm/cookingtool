@@ -1,13 +1,34 @@
 let socket;    // define a socket variable
 
+function checkLoginState() {
+    if (typeof(Storage) !== "undefined") {
+        // Code for localStorage/sessionStorage.
+        if (localStorage.getItem('user') != null) {
+            socket.emit('req-loginFromStorage', localStorage.getItem('user'));
+        }
+    } else {
+        // Sorry! No Web Storage support..
+        console.log('browser does not support web storage (only to stay logged in)');
+    }
+}
+
+function storeLoginData(username) {
+    if (localStorage.getItem('user') == null) {
+        // if there wasnt already someone logged on
+        localStorage.setItem('user', username);
+    }
+}
+
 function setup() {
     // connect to server via sockets
     // socket = io.connect('http://37.120.137.243:13181');
     // socket = io.connect('http://cookingtool.tk');
     // socket = io.connect('192.168.1.133:80');
     
-    socket = io.connect('http://169.254.204.56:5000');
+    // socket = io.connect('http://10.0.0.33:5000');
     // socket = io.connect('localhost:5500'); // local
+
+    socket = io.connect('http://10.0.0.4:5000'); // RaPi
 
     // trigger 'updateMeals' when this client recieves a message called 'updateMeals'
     socket.on('updateMeals', updateMeals); // same message name as in server
@@ -19,6 +40,8 @@ function setup() {
     socket.on('registered', registered);
 
     console.log('connected to server! ');
+
+    checkLoginState();
 
     noCanvas();
 }
@@ -94,6 +117,8 @@ function alertGeneral([dangerBool, msg]) {
     }, 2500);
 }
 function loggedIn([username, memberstatus]) {
+    storeLoginData(username);
+
     // clear modal and hide it
     // TODO: maybe a better way doing that
     $('#username-login').val('');
