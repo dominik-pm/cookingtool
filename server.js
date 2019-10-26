@@ -2,7 +2,7 @@
   var express = require('express');
 
   var port = 5000;
-  //var port = 5500;
+  // var port = 5500;
 
   var app = express();
   var server = app.listen(port);
@@ -53,6 +53,7 @@ function newConnection(socket) {
   socket.on('req-addMeal', addMeal);
   socket.on('req-rateMeal', rateMeal);
   socket.on('req-login', login);
+  socket.on('req-loginFromStorage', loginFromStorage);
   socket.on('req-register', register);
   socket.on('req-logoff', logoff);
   socket.on('req-setMealToday', setMealToday);
@@ -216,6 +217,18 @@ function newConnection(socket) {
       socket.emit('alertGeneral', [true, msg])
     }
   }
+  function loginFromStorage(username) {
+    let user = allUser.find(function(u) {
+      return u.username == username;
+    });
+
+    if (user != null) {
+      loginUser(user);
+    }
+    else {
+      console.log('storage login didnt work');
+    }
+  }
   function login([username, password]) {
     let user = allUser.find(function(u) {
       return u.username == username;
@@ -226,20 +239,23 @@ function newConnection(socket) {
       let msg = username + ' is not registered yet!';
       socket.emit('alertModal', [true, msg])  // [dangerBool/*'true if its an error'*/, msg]
     }
-    else if (user.password != password) {
+    else if (user.password != password && password) {
       let msg = 'Wrong password!';
       socket.emit('alertModal', [true, msg])  // [dangerBool/*'true if its an error'*/, msg]
     }
     else {
       // correctly logged in
+      loginUser(user);
+    }
+  }
+  function loginUser(user) {
       loggedinUserIndex = allUser.indexOf(user);
 
       let msg = 'Logged in!';
       socket.emit('alertGeneral', [false, msg])  // [dangerBool/*'true if its an error'*/, msg]
-      console.log(username + ' just logged in!');
+      console.log(user.username + ' just logged in!');
       memberstatus = user.memberstatus;
-      socket.emit('loggedIn', [username, user.memberstatus]);
-    }
+      socket.emit('loggedIn', [user.username, user.memberstatus]);
   }
   function register([username, password, repassword]) {
     // check for errors
