@@ -316,6 +316,7 @@ function newConnection(socket) {
             emitMealToday();
             console.log('set meal today:');
             console.log(meals[mealTodayIndex]);
+            meals[mealTodayIndex].date = new Date().toJSON().slice(0, 10).replace(/-/g, '-'); // change last cooked date of this meal to today
             let msg = 'Successfully set today\'s meal!'
             socket.emit('alertGeneral', [false, msg]);
           }
