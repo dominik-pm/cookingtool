@@ -1,5 +1,12 @@
 [
   {
+    "name": "Apfelstrudel",
+    "description": "ausgezogener Apfelstrudel",
+    "date": "2019-10-26",
+    "ratings": [],
+    "rating": 0
+  },
+  {
     "name": "Fischpfanne",
     "description": "",
     "date": "2019-08-09",
@@ -21,9 +28,9 @@
     "rating": 0
   },
   {
-    "name": "Apfelstrudel",
-    "description": "ausgezogener Apfelstrudel",
-    "date": "2019-10-26",
+    "name": "TestMeal",
+    "description": "",
+    "date": "2019-10-27",
     "ratings": [],
     "rating": 0
   }
