@@ -28,7 +28,7 @@ function setup() {
     // socket = io.connect('http://10.0.0.33:5000');
     // socket = io.connect('localhost:5500'); // local
 
-    socket = io.connect('http://10.0.0.4:5000'); // RaPi
+    socket = io.connect('http://10.0.0.31:5000'); // RaPi
 
     // trigger 'updateMeals' when this client recieves a message called 'updateMeals'
     socket.on('updateMeals', updateMeals); // same message name as in server
