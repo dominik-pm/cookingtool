@@ -9,12 +9,22 @@
     "username": "a",
     "password": "a",
     "memberstatus": 2,
-    "ratings": []
+    "ratings": [
+      {
+        "meal": "Lungenbraten",
+        "rated": 1
+      }
+    ]
   },
   {
     "username": "b",
     "password": "b",
     "memberstatus": 1,
     "ratings": []
+  },
+  {
+    "username": "123",
+    "password": "123",
+    "memberstatus": 0
   }
 ]
