@@ -7,6 +7,13 @@
     "rating": 0
   },
   {
+    "name": "Lasagne",
+    "description": "",
+    "date": "2020-03-08",
+    "ratings": [],
+    "rating": 0
+  },
+  {
     "name": "Apfelstrudel",
     "description": "ausgezogener Apfelstrudel",
     "date": "2019-10-26",
@@ -35,9 +42,9 @@
     "rating": 0
   },
   {
-    "name": "Lasagne",
+    "name": "Gemüsestrudel",
     "description": "",
-    "date": "2020-03-08",
+    "date": "2020-03-13",
     "ratings": [],
     "rating": 0
   }
