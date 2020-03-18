@@ -1,5 +1,40 @@
 [
   {
+    "name": "Fisch",
+    "description": "",
+    "date": "2020-03-18",
+    "ratings": [],
+    "rating": 0
+  },
+  {
+    "name": "Faschierter Braten",
+    "description": "",
+    "date": "2020-03-17",
+    "ratings": [],
+    "rating": 0
+  },
+  {
+    "name": "Berner Würstel",
+    "description": "",
+    "date": "2020-03-16",
+    "ratings": [],
+    "rating": 0
+  },
+  {
+    "name": "Kaiserschmarren",
+    "description": "",
+    "date": "2020-03-16",
+    "ratings": [],
+    "rating": 0
+  },
+  {
+    "name": "Gemüsestrudel",
+    "description": "",
+    "date": "2020-03-13",
+    "ratings": [],
+    "rating": 0
+  },
+  {
     "name": "Lungenbraten",
     "description": "",
     "date": "2020-03-08",
@@ -42,9 +77,9 @@
     "rating": 0
   },
   {
-    "name": "Gemüsestrudel",
+    "name": "Wurstfleckerl",
     "description": "",
-    "date": "2020-03-13",
+    "date": "2020-03-15",
     "ratings": [],
     "rating": 0
   }

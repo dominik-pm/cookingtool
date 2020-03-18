@@ -17,6 +17,10 @@
       {
         "meal": "Lasagne",
         "rated": 2
+      },
+      {
+        "meal": "Fisch",
+        "rated": 1
       }
     ]
   },
