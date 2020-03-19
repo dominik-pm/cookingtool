@@ -28,6 +28,13 @@
     "rating": 0
   },
   {
+    "name": "Wurstfleckerl",
+    "description": "",
+    "date": "2020-03-15",
+    "ratings": [],
+    "rating": 0
+  },
+  {
     "name": "Gemüsestrudel",
     "description": "",
     "date": "2020-03-13",
@@ -77,9 +84,9 @@
     "rating": 0
   },
   {
-    "name": "Wurstfleckerl",
+    "name": "Lauchquiche",
     "description": "",
-    "date": "2020-03-15",
+    "date": "2020-03-19",
     "ratings": [],
     "rating": 0
   }
